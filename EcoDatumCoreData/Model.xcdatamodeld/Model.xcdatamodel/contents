@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G5019" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="EcoDataEntity" representedClassName=".EcoDataEntity" syncable="YES" codeGenerationType="class">
+    <entity name="EcoDatumEntity" representedClassName=".EcoDatumEntity" syncable="YES" codeGenerationType="class">
         <attribute name="collectionDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="dataType" attributeType="String" syncable="YES"/>
@@ -10,8 +10,8 @@
         <attribute name="primaryType" attributeType="String" syncable="YES"/>
         <attribute name="secondaryType" attributeType="String" syncable="YES"/>
         <attribute name="updatedDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="children" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="EcoDataEntity" inverseName="parent" inverseEntity="EcoDataEntity" syncable="YES"/>
-        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EcoDataEntity" inverseName="children" inverseEntity="EcoDataEntity" syncable="YES"/>
+        <relationship name="children" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="EcoDatumEntity" inverseName="parent" inverseEntity="EcoDatumEntity" syncable="YES"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EcoDatumEntity" inverseName="children" inverseEntity="EcoDatumEntity" syncable="YES"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="SiteEntity" inverseName="ecoData" inverseEntity="SiteEntity" syncable="YES"/>
     </entity>
     <entity name="SiteEntity" representedClassName=".SiteEntity" syncable="YES" codeGenerationType="class">
@@ -24,10 +24,10 @@
         <attribute name="longitude" attributeType="Decimal" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="updatedDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="ecoData" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EcoDataEntity" inverseName="site" inverseEntity="EcoDataEntity" syncable="YES"/>
+        <relationship name="ecoData" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EcoDatumEntity" inverseName="site" inverseEntity="EcoDatumEntity" syncable="YES"/>
     </entity>
     <elements>
-        <element name="EcoDataEntity" positionX="-63" positionY="-18" width="128" height="225"/>
+        <element name="EcoDatumEntity" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="SiteEntity" positionX="-54" positionY="-9" width="128" height="195"/>
     </elements>
 </model>

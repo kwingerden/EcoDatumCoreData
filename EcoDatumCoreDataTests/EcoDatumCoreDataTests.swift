@@ -22,8 +22,18 @@ class EcoDatumCoreDataTests: XCTestCase {
     }
     
     func test1() throws {
-        let site1 = try CoreDataManager.shared.createSite(name: "test1")
+        let dm = CoreDataManager.shared
+        let site1 = dm.newSite(name: "Site1")
+        let site2 = dm.newSite(name: "Site2")
+        let site3 = dm.newSite(name: "Site3")
+        
+        try dm.save()
+        
         print(site1.name!)
-        print("done")
+        print(site2.name!)
+        print(site3.name!)
+        
+        dm.delete(site1)
+        try dm.save()
     }
 }
