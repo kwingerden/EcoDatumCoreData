@@ -10,18 +10,18 @@
         <attribute name="primaryType" attributeType="String" syncable="YES"/>
         <attribute name="secondaryType" attributeType="String" syncable="YES"/>
         <attribute name="updatedDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="children" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="EcoDatumEntity" inverseName="parent" inverseEntity="EcoDatumEntity" syncable="YES"/>
+        <relationship name="children" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EcoDatumEntity" inverseName="parent" inverseEntity="EcoDatumEntity" syncable="YES"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EcoDatumEntity" inverseName="children" inverseEntity="EcoDatumEntity" syncable="YES"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="SiteEntity" inverseName="ecoData" inverseEntity="SiteEntity" syncable="YES"/>
     </entity>
     <entity name="SiteEntity" representedClassName=".SiteEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="altitude" attributeType="Decimal" syncable="YES"/>
-        <attribute name="altitudeAccuracy" attributeType="Decimal" syncable="YES"/>
-        <attribute name="coordinateAccuracy" attributeType="Decimal" syncable="YES"/>
+        <attribute name="altitude" optional="YES" attributeType="Decimal" syncable="YES"/>
+        <attribute name="altitudeAccuracy" optional="YES" attributeType="Decimal" syncable="YES"/>
+        <attribute name="coordinateAccuracy" optional="YES" attributeType="Decimal" syncable="YES"/>
         <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="latitude" attributeType="Decimal" syncable="YES"/>
-        <attribute name="longitude" attributeType="Decimal" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Decimal" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Decimal" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="updatedDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="ecoData" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EcoDatumEntity" inverseName="site" inverseEntity="EcoDatumEntity" syncable="YES"/>
