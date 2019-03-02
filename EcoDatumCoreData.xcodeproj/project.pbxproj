@@ -13,6 +13,7 @@
 		BEC863602224E0EB00AC120A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEC8635E2224E0EB00AC120A /* Model.xcdatamodeld */; };
 		BEC8637922250BDE00AC120A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8637822250BDE00AC120A /* CoreDataManager.swift */; };
 		BEE91FB5222A328B0072FF2B /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE91FB4222A328B0072FF2B /* Location.swift */; };
+		BEE91FB7222B11430072FF2B /* SiteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE91FB6222B11430072FF2B /* SiteEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		BEC8635F2224E0EB00AC120A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		BEC8637822250BDE00AC120A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		BEE91FB4222A328B0072FF2B /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		BEE91FB6222B11430072FF2B /* SiteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				BEC8635E2224E0EB00AC120A /* Model.xcdatamodeld */,
 				BEC8637822250BDE00AC120A /* CoreDataManager.swift */,
 				BEE91FB4222A328B0072FF2B /* Location.swift */,
+				BEE91FB6222B11430072FF2B /* SiteEntity.swift */,
 			);
 			path = EcoDatumCoreData;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEC8637922250BDE00AC120A /* CoreDataManager.swift in Sources */,
+				BEE91FB7222B11430072FF2B /* SiteEntity.swift in Sources */,
 				BEE91FB5222A328B0072FF2B /* Location.swift in Sources */,
 				BEC863602224E0EB00AC120A /* Model.xcdatamodeld in Sources */,
 			);

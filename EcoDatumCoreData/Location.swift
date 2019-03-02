@@ -12,9 +12,7 @@ import CoreLocation
 extension CLLocation {
     
     func isValid() -> Bool {
-        return CLLocationCoordinate2DIsValid(coordinate) &&
-            horizontalAccuracy >= 0 &&
-            verticalAccuracy >= 0
+        return CLLocationCoordinate2DIsValid(coordinate)
     }
     
 }

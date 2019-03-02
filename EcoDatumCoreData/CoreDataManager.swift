@@ -39,33 +39,19 @@ public class CoreDataManager {
         
     }
     
-    public func deleteAllSites() throws {
-        let fetchRequest: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
-        try ctx.execute(deleteRequest)
+    public func reset() throws {
+        try deleteAllSites()
+        try save()
     }
     
     public func save() throws {
         try ctx.save()
     }
     
-    public func siteCount() throws -> Int {
-        let request: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
-        return try ctx.count(for: request)
+    public func delete(_ object: NSManagedObject) {
+        pc.viewContext.delete(object)
     }
-    
-    public func getAllSites() throws -> [SiteEntity] {
-        let request: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
-        return try ctx.fetch(request)
-    }
-        
-    /*
-    public func getSiteById(_ id: UUID) -> SiteEntity {
-        let request: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
-        request.predicate = NSPredicate(format: <#T##String#>, <#T##args: CVarArg...##CVarArg#>)
-    }
- */
-    
+
     public func newSite(name: String, location: CLLocation? = nil) throws -> SiteEntity {
         if name.isEmpty {
             throw CDMError.InvalidSiteName
@@ -94,8 +80,20 @@ public class CoreDataManager {
         return site 
     }
     
-    public func delete(_ object: NSManagedObject) {
-        pc.viewContext.delete(object)
+    public func siteCount() throws -> Int {
+        let request: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
+        return try ctx.count(for: request)
+    }
+    
+    public func getAllSites() throws -> [SiteEntity] {
+        let request: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
+        return try ctx.fetch(request)
+    }
+
+    public func deleteAllSites() throws {
+        let fetchRequest: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
+        try ctx.execute(deleteRequest)
     }
     
     public func newEcoDatum(site: SiteEntity) -> EcoDatumEntity {
@@ -107,6 +105,22 @@ public class CoreDataManager {
         ecoDatum.site = site
         
         return ecoDatum
+    }
+    
+    public func ecoDatumCount() throws -> Int {
+        let request: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
+        return try ctx.count(for: request)
+    }
+    
+    public func getAllEcoDatum() throws -> [EcoDatumEntity] {
+        let request: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
+        return try ctx.fetch(request)
+    }
+    
+    public func deleteAllEcoDatum() throws {
+        let fetchRequest: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
+        try ctx.execute(deleteRequest)
     }
     
     private func toDecimal(_ value: Decimal) -> NSDecimalNumber {
