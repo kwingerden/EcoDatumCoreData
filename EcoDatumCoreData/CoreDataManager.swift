@@ -39,7 +39,11 @@ public class CoreDataManager {
     private let log = OSLog(subsystem: "org.ecodatum.EcoDatumCoreData", category: "CoreDataManager")
     
     private init() {
-        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(willSaveContext),
+            name: .NSManagedObjectContextWillSave,
+            object: nil)
     }
     
     public func reset() throws {
@@ -182,6 +186,16 @@ public class CoreDataManager {
     
     private func toDecimal(_ value: Double) -> NSDecimalNumber {
         return toDecimal(Decimal(value))
+    }
+    
+    @objc private func willSaveContext(_ notification: NSNotification) {
+        if let context = notification.object as? NSManagedObjectContext {
+            context.updatedObjects.forEach {
+                if let _ = $0.entity.propertiesByName["updatedDate"] {
+                    $0.setValue(Date(), forKey: "updatedDate")
+                }
+            }
+        }
     }
     
 }

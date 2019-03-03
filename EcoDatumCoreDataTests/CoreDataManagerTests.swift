@@ -123,4 +123,28 @@ class CoreDataManagerTests: XCTestCase {
         XCTAssert(site1EcoDatum2Loaded?.children!.count == 1)
     }
     
+    func test4() throws {
+        let site1 = try mgr.newSite("Site1")
+        try mgr.save()
+        
+        let expectation = XCTestExpectation(description: "TimerExpectation")
+        let _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) {
+            _ in
+            
+            site1.name = "New Name"
+            
+            do {
+                try self.mgr.save()
+            } catch {
+                XCTFail()
+            }
+            
+            let interval = site1.updatedDate!.timeIntervalSince1970 - site1.createdDate!.timeIntervalSince1970
+            XCTAssert(interval > 0.5 && interval < 1.5)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 3)
+    }
+    
 }
