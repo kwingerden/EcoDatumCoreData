@@ -9,10 +9,11 @@
 import Foundation
 import CoreData
 import CoreLocation
+import os
 
 public class CoreDataManager {
     
-    enum CDMError: Error {
+    enum CoreDataManagerError: Error {
         case InvalidSiteName
         case InvalidSiteLocation
     }
@@ -35,6 +36,8 @@ public class CoreDataManager {
     
     private lazy var ctx = pc.viewContext
     
+    private let log = OSLog(subsystem: "org.ecodatum.EcoDatumCoreData", category: "CoreDataManager")
+    
     private init() {
         
     }
@@ -52,13 +55,13 @@ public class CoreDataManager {
         pc.viewContext.delete(object)
     }
 
-    public func newSite(name: String, location: CLLocation? = nil) throws -> SiteEntity {
+    public func newSite(_ name: String, location: CLLocation? = nil) throws -> SiteEntity {
         if name.isEmpty {
-            throw CDMError.InvalidSiteName
+            throw CoreDataManagerError.InvalidSiteName
         }
         
         if let location = location, !location.isValid() {
-            throw CDMError.InvalidSiteLocation
+            throw CoreDataManagerError.InvalidSiteLocation
         }
     
         let site = NSEntityDescription.insertNewObject(
@@ -80,6 +83,19 @@ public class CoreDataManager {
         return site 
     }
     
+    public func findSite(byId id: UUID) throws -> SiteEntity? {
+        let request: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id = %@", id.uuidString)
+        let result = try ctx.fetch(request)
+        if result.count == 0 {
+            return nil
+        }
+        if result.count > 1 {
+            os_log("More than one site found with id: %@", log: log, type: .error, id.uuidString)
+        }
+        return result[0]
+    }
+    
     public func siteCount() throws -> Int {
         let request: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
         return try ctx.count(for: request)
@@ -87,7 +103,7 @@ public class CoreDataManager {
     
     public func getAllSites() throws -> [SiteEntity] {
         let request: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
-        return try ctx.fetch(request)
+        return try ctx.fetch(request).sorted(by: SiteEntity.sortByName)
     }
 
     public func deleteAllSites() throws {
@@ -96,28 +112,65 @@ public class CoreDataManager {
         try ctx.execute(deleteRequest)
     }
     
-    public func newEcoDatum(site: SiteEntity) -> EcoDatumEntity {
+    public func newEcoDatum(collectionDate: Date,
+                            primaryType: String,
+                            secondaryType: String,
+                            dataType: String,
+                            dataUnit: String? = nil,
+                            dataValue: Data,
+                            parent: EcoDatumEntity? = nil,
+                            children: NSSet? = nil,
+                            for site: SiteEntity) throws -> EcoDatumEntity {
         let ecoDatum = NSEntityDescription.insertNewObject(
             forEntityName: "EcoDatumEntity",
             into: pc.viewContext) as! EcoDatumEntity
         
         ecoDatum.id = UUID()
+        ecoDatum.createdDate = Date()
+        ecoDatum.updatedDate = Date()
+        ecoDatum.collectionDate = collectionDate
+        ecoDatum.primaryType = primaryType
+        ecoDatum.secondaryType = secondaryType
+        ecoDatum.dataType = dataType
+        ecoDatum.dataUnit = dataUnit
+        ecoDatum.dataValue = dataValue
+        ecoDatum.parent = parent
+        ecoDatum.children = children
         ecoDatum.site = site
-        
+    
         return ecoDatum
     }
     
-    public func ecoDatumCount() throws -> Int {
+    public func findEcoDatum(byId id: UUID) throws -> EcoDatumEntity? {
         let request: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id = %@", id.uuidString)
+        let result = try ctx.fetch(request)
+        if result.count == 0 {
+            return nil
+        }
+        if result.count > 1 {
+            os_log("More than one ecodatum found with id: %@", log: log, type: .error, id.uuidString)
+        }
+        return result[0]
+    }
+    
+    public func ecoDatumCount(for site: SiteEntity? = nil) throws -> Int {
+        let request: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
+        if let site = site {
+            request.predicate = NSPredicate(format: "site.id = %@", site.id!.uuidString)
+        }
         return try ctx.count(for: request)
     }
     
-    public func getAllEcoDatum() throws -> [EcoDatumEntity] {
+    public func getAllEcoDatum(for site: SiteEntity? = nil) throws -> [EcoDatumEntity] {
         let request: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
-        return try ctx.fetch(request)
+        if let site = site {
+            request.predicate = NSPredicate(format: "site.id = %@", site.id!.uuidString)
+        }
+        return try ctx.fetch(request).sorted(by: EcoDatumEntity.sortByCollectionDate)
     }
     
-    public func deleteAllEcoDatum() throws {
+    public func deleteAllEcoDatum(for site: SiteEntity? = nil) throws {
         let fetchRequest: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
         try ctx.execute(deleteRequest)

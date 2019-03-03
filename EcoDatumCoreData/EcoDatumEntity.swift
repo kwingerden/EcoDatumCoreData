@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+public extension EcoDatumEntity {
+    
+    public static func sortByCollectionDate(_ lhs: EcoDatumEntity, _ rhs: EcoDatumEntity) throws -> Bool  {
+        return lhs.collectionDate! < rhs.collectionDate!
+    }
+    
+}

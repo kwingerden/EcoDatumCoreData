@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		BEC863492224DD7800AC120A /* EcoDatumCoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC8633F2224DD7800AC120A /* EcoDatumCoreData.framework */; };
-		BEC8634E2224DD7800AC120A /* EcoDatumCoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8634D2224DD7800AC120A /* EcoDatumCoreDataTests.swift */; };
+		BEC8634E2224DD7800AC120A /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8634D2224DD7800AC120A /* CoreDataManagerTests.swift */; };
 		BEC863502224DD7800AC120A /* EcoDatumCoreData.h in Headers */ = {isa = PBXBuildFile; fileRef = BEC863422224DD7800AC120A /* EcoDatumCoreData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BEC863602224E0EB00AC120A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEC8635E2224E0EB00AC120A /* Model.xcdatamodeld */; };
 		BEC8637922250BDE00AC120A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8637822250BDE00AC120A /* CoreDataManager.swift */; };
 		BEE91FB5222A328B0072FF2B /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE91FB4222A328B0072FF2B /* Location.swift */; };
 		BEE91FB7222B11430072FF2B /* SiteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE91FB6222B11430072FF2B /* SiteEntity.swift */; };
+		BEE91FEE222B44A70072FF2B /* EcoDatumEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE91FED222B44A70072FF2B /* EcoDatumEntity.swift */; };
+		BEE91FF3222B537A0072FF2B /* EcoDatumCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEE91FF2222B537A0072FF2B /* EcoDatumCommon.framework */; };
+		BEE91FF4222B53C30072FF2B /* EcoDatumCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEE91FF2222B537A0072FF2B /* EcoDatumCommon.framework */; };
+		BEE91FF7222B54890072FF2B /* EcoDatumCommon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEE91FF2222B537A0072FF2B /* EcoDatumCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,17 +30,32 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BEE91FF6222B547C0072FF2B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BEE91FF7222B54890072FF2B /* EcoDatumCommon.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		BEC8633F2224DD7800AC120A /* EcoDatumCoreData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EcoDatumCoreData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEC863422224DD7800AC120A /* EcoDatumCoreData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EcoDatumCoreData.h; sourceTree = "<group>"; };
 		BEC863432224DD7800AC120A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEC863482224DD7800AC120A /* EcoDatumCoreDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EcoDatumCoreDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BEC8634D2224DD7800AC120A /* EcoDatumCoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoDatumCoreDataTests.swift; sourceTree = "<group>"; };
+		BEC8634D2224DD7800AC120A /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
 		BEC8634F2224DD7800AC120A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEC8635F2224E0EB00AC120A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		BEC8637822250BDE00AC120A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		BEE91FB4222A328B0072FF2B /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		BEE91FB6222B11430072FF2B /* SiteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteEntity.swift; sourceTree = "<group>"; };
+		BEE91FED222B44A70072FF2B /* EcoDatumEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoDatumEntity.swift; sourceTree = "<group>"; };
+		BEE91FF2222B537A0072FF2B /* EcoDatumCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EcoDatumCommon.framework; path = Carthage/Build/iOS/EcoDatumCommon.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEE91FF3222B537A0072FF2B /* EcoDatumCommon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEC863492224DD7800AC120A /* EcoDatumCoreData.framework in Frameworks */,
+				BEE91FF4222B53C30072FF2B /* EcoDatumCommon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +85,7 @@
 				BEC863412224DD7800AC120A /* EcoDatumCoreData */,
 				BEC8634C2224DD7800AC120A /* EcoDatumCoreDataTests */,
 				BEC863402224DD7800AC120A /* Products */,
+				BEE91FF1222B537A0072FF2B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -85,6 +107,7 @@
 				BEC8637822250BDE00AC120A /* CoreDataManager.swift */,
 				BEE91FB4222A328B0072FF2B /* Location.swift */,
 				BEE91FB6222B11430072FF2B /* SiteEntity.swift */,
+				BEE91FED222B44A70072FF2B /* EcoDatumEntity.swift */,
 			);
 			path = EcoDatumCoreData;
 			sourceTree = "<group>";
@@ -92,10 +115,18 @@
 		BEC8634C2224DD7800AC120A /* EcoDatumCoreDataTests */ = {
 			isa = PBXGroup;
 			children = (
-				BEC8634D2224DD7800AC120A /* EcoDatumCoreDataTests.swift */,
+				BEC8634D2224DD7800AC120A /* CoreDataManagerTests.swift */,
 				BEC8634F2224DD7800AC120A /* Info.plist */,
 			);
 			path = EcoDatumCoreDataTests;
+			sourceTree = "<group>";
+		};
+		BEE91FF1222B537A0072FF2B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BEE91FF2222B537A0072FF2B /* EcoDatumCommon.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +168,7 @@
 				BEC863442224DD7800AC120A /* Sources */,
 				BEC863452224DD7800AC120A /* Frameworks */,
 				BEC863462224DD7800AC120A /* Resources */,
+				BEE91FF6222B547C0072FF2B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -209,6 +241,7 @@
 			files = (
 				BEC8637922250BDE00AC120A /* CoreDataManager.swift in Sources */,
 				BEE91FB7222B11430072FF2B /* SiteEntity.swift in Sources */,
+				BEE91FEE222B44A70072FF2B /* EcoDatumEntity.swift in Sources */,
 				BEE91FB5222A328B0072FF2B /* Location.swift in Sources */,
 				BEC863602224E0EB00AC120A /* Model.xcdatamodeld in Sources */,
 			);
@@ -218,7 +251,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEC8634E2224DD7800AC120A /* EcoDatumCoreDataTests.swift in Sources */,
+				BEC8634E2224DD7800AC120A /* CoreDataManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +455,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9424XMB56D;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = EcoDatumCoreDataTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -441,6 +478,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9424XMB56D;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = EcoDatumCoreDataTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
