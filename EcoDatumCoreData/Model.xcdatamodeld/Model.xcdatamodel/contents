@@ -15,13 +15,13 @@
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="SiteEntity" inverseName="ecoData" inverseEntity="SiteEntity" syncable="YES"/>
     </entity>
     <entity name="SiteEntity" representedClassName=".SiteEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="altitude" optional="YES" attributeType="Decimal" syncable="YES"/>
-        <attribute name="altitudeAccuracy" optional="YES" attributeType="Decimal" syncable="YES"/>
-        <attribute name="coordinateAccuracy" optional="YES" attributeType="Decimal" syncable="YES"/>
+        <attribute name="altitude" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="altitudeAccuracy" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="coordinateAccuracy" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Decimal" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Decimal" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="updatedDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="ecoData" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EcoDatumEntity" inverseName="site" inverseEntity="EcoDatumEntity" syncable="YES"/>

@@ -77,11 +77,11 @@ public class CoreDataManager {
         site.createdDate = Date()
         site.updatedDate = Date()
         if let l = location {
-            site.altitude = toDecimal(l.altitude)
-            site.altitudeAccuracy = toDecimal(l.verticalAccuracy)
-            site.coordinateAccuracy = toDecimal(l.horizontalAccuracy)
-            site.latitude = toDecimal(l.coordinate.latitude)
-            site.longitude = toDecimal(l.coordinate.longitude)
+            site.altitude = l.altitude
+            site.altitudeAccuracy = l.verticalAccuracy
+            site.coordinateAccuracy = l.horizontalAccuracy
+            site.latitude = l.coordinate.latitude
+            site.longitude = l.coordinate.longitude
         }
         
         return site 
@@ -178,14 +178,6 @@ public class CoreDataManager {
         let fetchRequest: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
         try ctx.execute(deleteRequest)
-    }
-    
-    private func toDecimal(_ value: Decimal) -> NSDecimalNumber {
-        return NSDecimalNumber(decimal: value)
-    }
-    
-    private func toDecimal(_ value: Double) -> NSDecimalNumber {
-        return toDecimal(Decimal(value))
     }
     
     @objc private func willSaveContext(_ notification: NSNotification) {
