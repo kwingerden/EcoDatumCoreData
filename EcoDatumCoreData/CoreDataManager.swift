@@ -64,10 +64,6 @@ public class CoreDataManager {
             throw CoreDataManagerError.InvalidSiteName
         }
         
-        if let location = location, !location.isValid() {
-            throw CoreDataManagerError.InvalidSiteLocation
-        }
-    
         let site = NSEntityDescription.insertNewObject(
             forEntityName: "SiteEntity",
             into: ctx) as! SiteEntity

@@ -12,7 +12,6 @@
 		BEC863502224DD7800AC120A /* EcoDatumCoreData.h in Headers */ = {isa = PBXBuildFile; fileRef = BEC863422224DD7800AC120A /* EcoDatumCoreData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BEC863602224E0EB00AC120A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEC8635E2224E0EB00AC120A /* Model.xcdatamodeld */; };
 		BEC8637922250BDE00AC120A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8637822250BDE00AC120A /* CoreDataManager.swift */; };
-		BEE91FB5222A328B0072FF2B /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE91FB4222A328B0072FF2B /* Location.swift */; };
 		BEE91FB7222B11430072FF2B /* SiteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE91FB6222B11430072FF2B /* SiteEntity.swift */; };
 		BEE91FEE222B44A70072FF2B /* EcoDatumEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE91FED222B44A70072FF2B /* EcoDatumEntity.swift */; };
 		BEE91FF3222B537A0072FF2B /* EcoDatumCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEE91FF2222B537A0072FF2B /* EcoDatumCommon.framework */; };
@@ -52,7 +51,6 @@
 		BEC8634F2224DD7800AC120A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEC8635F2224E0EB00AC120A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		BEC8637822250BDE00AC120A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		BEE91FB4222A328B0072FF2B /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		BEE91FB6222B11430072FF2B /* SiteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteEntity.swift; sourceTree = "<group>"; };
 		BEE91FED222B44A70072FF2B /* EcoDatumEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoDatumEntity.swift; sourceTree = "<group>"; };
 		BEE91FF2222B537A0072FF2B /* EcoDatumCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EcoDatumCommon.framework; path = Carthage/Build/iOS/EcoDatumCommon.framework; sourceTree = "<group>"; };
@@ -105,7 +103,6 @@
 				BEC863432224DD7800AC120A /* Info.plist */,
 				BEC8635E2224E0EB00AC120A /* Model.xcdatamodeld */,
 				BEC8637822250BDE00AC120A /* CoreDataManager.swift */,
-				BEE91FB4222A328B0072FF2B /* Location.swift */,
 				BEE91FB6222B11430072FF2B /* SiteEntity.swift */,
 				BEE91FED222B44A70072FF2B /* EcoDatumEntity.swift */,
 			);
@@ -242,7 +239,6 @@
 				BEC8637922250BDE00AC120A /* CoreDataManager.swift in Sources */,
 				BEE91FB7222B11430072FF2B /* SiteEntity.swift in Sources */,
 				BEE91FEE222B44A70072FF2B /* EcoDatumEntity.swift in Sources */,
-				BEE91FB5222A328B0072FF2B /* Location.swift in Sources */,
 				BEC863602224E0EB00AC120A /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
