@@ -11,14 +11,11 @@ import CoreData
 import CoreLocation
 import os
 
-public class CoreDataManager {
+class CoreDataManager {
     
-    enum CoreDataManagerError: Error {
-        case InvalidSiteName
-        case InvalidSiteLocation
-    }
-
     public static let shared = CoreDataManager()
+    
+    lazy var ctx = pc.viewContext
     
     private lazy var pc: NSPersistentContainer = {
         let bundle = Bundle(identifier: "org.ecodatum.EcoDatumCoreData")!
@@ -34,8 +31,6 @@ public class CoreDataManager {
         return container
     }()
     
-    private lazy var ctx = pc.viewContext
-    
     private let log = OSLog(subsystem: "org.ecodatum.EcoDatumCoreData", category: "CoreDataManager")
     
     private init() {
@@ -46,8 +41,8 @@ public class CoreDataManager {
             object: nil)
     }
     
-    public func reset() throws {
-        try deleteAllSites()
+    func reset() throws {
+        try NotebookEntity.deleteAll()
         try save()
     }
     
@@ -55,13 +50,13 @@ public class CoreDataManager {
         try ctx.save()
     }
     
-    public func delete(_ object: NSManagedObject) {
-        pc.viewContext.delete(object)
-    }
-
-    public func newSite(_ name: String, location: CLLocation? = nil) throws -> SiteEntity {
+    /*
+    public func addSite(name: String, location: CLLocation? = nil, to notebook: NotebookEntity) throws -> SiteEntity {
         if name.isEmpty {
             throw CoreDataManagerError.InvalidSiteName
+        }
+        if let _ = findSite(by: name, in: notebook) {
+            throw CoreDataManagerError.SiteWithNameAlreadyExists(name: name)
         }
         
         let site = NSEntityDescription.insertNewObject(
@@ -79,40 +74,30 @@ public class CoreDataManager {
             site.latitude = l.coordinate.latitude
             site.longitude = l.coordinate.longitude
         }
+        site.notebook = notebook
         
         return site 
     }
     
-    public func findSite(byId id: UUID) throws -> SiteEntity? {
-        let request: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "id = %@", id.uuidString)
-        let result = try ctx.fetch(request)
-        if result.count == 0 {
+    public func findSite(by name: String, in notebook: NotebookEntity) -> SiteEntity? {
+        guard let sites = notebook.sites else {
             return nil
         }
-        if result.count > 1 {
-            os_log("More than one site found with id: %@", log: log, type: .error, id.uuidString)
+        for s in sites {
+            let site = (s as! SiteEntity)
+            if name.lowercased() == site.name!.lowercased() {
+                return site
+            }
         }
-        return result[0]
+        return nil
     }
     
-    public func siteCount() throws -> Int {
-        let request: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
-        return try ctx.count(for: request)
+    public func getAllSites(in notebook: NotebookEntity) throws -> [SiteEntity] {
+        let request: NSFetchRequest<NotebookEntity> = NotebookEntity.fetchRequest()
+        return try ctx.fetch(request).sorted(by: NotebookEntity.sortByName(_:_:))
     }
     
-    public func getAllSites() throws -> [SiteEntity] {
-        let request: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
-        return try ctx.fetch(request).sorted(by: SiteEntity.sortByName)
-    }
-
-    public func deleteAllSites() throws {
-        let fetchRequest: NSFetchRequest<SiteEntity> = SiteEntity.fetchRequest()
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
-        try ctx.execute(deleteRequest)
-    }
-    
-    public func newEcoDatum(collectionDate: Date,
+    public func addEcoDatum(collectionDate: Date,
                             primaryType: String,
                             secondaryType: String,
                             dataType: String,
@@ -120,7 +105,7 @@ public class CoreDataManager {
                             dataValue: Data,
                             parent: EcoDatumEntity? = nil,
                             children: NSSet? = nil,
-                            for site: SiteEntity) throws -> EcoDatumEntity {
+                            to site: SiteEntity) throws -> EcoDatumEntity {
         let ecoDatum = NSEntityDescription.insertNewObject(
             forEntityName: "EcoDatumEntity",
             into: pc.viewContext) as! EcoDatumEntity
@@ -140,42 +125,7 @@ public class CoreDataManager {
     
         return ecoDatum
     }
-    
-    public func findEcoDatum(byId id: UUID) throws -> EcoDatumEntity? {
-        let request: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "id = %@", id.uuidString)
-        let result = try ctx.fetch(request)
-        if result.count == 0 {
-            return nil
-        }
-        if result.count > 1 {
-            os_log("More than one ecodatum found with id: %@", log: log, type: .error, id.uuidString)
-        }
-        return result[0]
-    }
-    
-    public func ecoDatumCount(for site: SiteEntity? = nil) throws -> Int {
-        let request: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
-        if let site = site {
-            request.predicate = NSPredicate(format: "site.id = %@", site.id!.uuidString)
-        }
-        return try ctx.count(for: request)
-    }
-    
-    public func getAllEcoDatum(for site: SiteEntity? = nil) throws -> [EcoDatumEntity] {
-        let request: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
-        if let site = site {
-            request.predicate = NSPredicate(format: "site.id = %@", site.id!.uuidString)
-        }
-        return try ctx.fetch(request).sorted(by: EcoDatumEntity.sortByCollectionDate)
-    }
-    
-    public func deleteAllEcoDatum(for site: SiteEntity? = nil) throws {
-        let fetchRequest: NSFetchRequest<EcoDatumEntity> = EcoDatumEntity.fetchRequest()
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
-        try ctx.execute(deleteRequest)
-    }
-    
+    */
     @objc private func willSaveContext(_ notification: NSNotification) {
         if let context = notification.object as? NSManagedObjectContext {
             context.updatedObjects.forEach {

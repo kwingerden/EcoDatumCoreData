@@ -31,6 +31,9 @@ class CoreDataManagerTests: XCTestCase {
     }
     
     func test1() throws {
+        let defaultNotebook = try NotebookEntity.new()
+        print(defaultNotebook.id!)
+        /*
         let site1 = try mgr.newSite("Site1")
         let site2 = try mgr.newSite("Site2")
         let site3 = try mgr.newSite("Site3")
@@ -45,8 +48,10 @@ class CoreDataManagerTests: XCTestCase {
         mgr.delete(site1)
         try mgr.save()
         XCTAssert(try mgr.getAllSites().count == 2)
+ */
     }
     
+    /*
     func test2() throws {
         let location1 = CLLocation(latitude: 37.33182, longitude: -122.03118)
         let site1 = try mgr.newSite("Site1", location: location1)
@@ -146,5 +151,6 @@ class CoreDataManagerTests: XCTestCase {
         
         wait(for: [expectation], timeout: 3)
     }
+ */
     
 }

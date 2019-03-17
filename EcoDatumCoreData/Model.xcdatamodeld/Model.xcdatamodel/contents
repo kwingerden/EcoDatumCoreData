@@ -14,6 +14,13 @@
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EcoDatumEntity" inverseName="children" inverseEntity="EcoDatumEntity" syncable="YES"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="SiteEntity" inverseName="ecoData" inverseEntity="SiteEntity" syncable="YES"/>
     </entity>
+    <entity name="NotebookEntity" representedClassName=".NotebookEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="updatedDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="sites" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SiteEntity" inverseName="notebook" inverseEntity="SiteEntity" syncable="YES"/>
+    </entity>
     <entity name="SiteEntity" representedClassName=".SiteEntity" syncable="YES" codeGenerationType="class">
         <attribute name="altitude" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="altitudeAccuracy" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
@@ -25,9 +32,11 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="updatedDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="ecoData" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EcoDatumEntity" inverseName="site" inverseEntity="EcoDatumEntity" syncable="YES"/>
+        <relationship name="notebook" maxCount="1" deletionRule="Nullify" destinationEntity="NotebookEntity" inverseName="sites" inverseEntity="NotebookEntity" syncable="YES"/>
     </entity>
     <elements>
         <element name="EcoDatumEntity" positionX="-63" positionY="-18" width="128" height="225"/>
-        <element name="SiteEntity" positionX="-54" positionY="-9" width="128" height="195"/>
+        <element name="NotebookEntity" positionX="-54" positionY="81" width="128" height="120"/>
+        <element name="SiteEntity" positionX="-54" positionY="-9" width="128" height="210"/>
     </elements>
 </model>

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BEBF705F223DFE0C00B7A014 /* NotebookEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBF705E223DFE0C00B7A014 /* NotebookEntity.swift */; };
+		BEBF7061223EE59700B7A014 /* SiteEntityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBF7060223EE59700B7A014 /* SiteEntityTest.swift */; };
+		BEBF7063223EE5B100B7A014 /* EcoDatumEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBF7062223EE5B100B7A014 /* EcoDatumEntityTests.swift */; };
+		BEBF7065223EE5C300B7A014 /* NotebookEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBF7064223EE5C300B7A014 /* NotebookEntityTests.swift */; };
 		BEC863492224DD7800AC120A /* EcoDatumCoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC8633F2224DD7800AC120A /* EcoDatumCoreData.framework */; };
 		BEC8634E2224DD7800AC120A /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8634D2224DD7800AC120A /* CoreDataManagerTests.swift */; };
 		BEC863502224DD7800AC120A /* EcoDatumCoreData.h in Headers */ = {isa = PBXBuildFile; fileRef = BEC863422224DD7800AC120A /* EcoDatumCoreData.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -43,6 +47,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BEBF705E223DFE0C00B7A014 /* NotebookEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookEntity.swift; sourceTree = "<group>"; };
+		BEBF7060223EE59700B7A014 /* SiteEntityTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteEntityTest.swift; sourceTree = "<group>"; };
+		BEBF7062223EE5B100B7A014 /* EcoDatumEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoDatumEntityTests.swift; sourceTree = "<group>"; };
+		BEBF7064223EE5C300B7A014 /* NotebookEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookEntityTests.swift; sourceTree = "<group>"; };
 		BEC8633F2224DD7800AC120A /* EcoDatumCoreData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EcoDatumCoreData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEC863422224DD7800AC120A /* EcoDatumCoreData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EcoDatumCoreData.h; sourceTree = "<group>"; };
 		BEC863432224DD7800AC120A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -105,6 +113,7 @@
 				BEC8637822250BDE00AC120A /* CoreDataManager.swift */,
 				BEE91FB6222B11430072FF2B /* SiteEntity.swift */,
 				BEE91FED222B44A70072FF2B /* EcoDatumEntity.swift */,
+				BEBF705E223DFE0C00B7A014 /* NotebookEntity.swift */,
 			);
 			path = EcoDatumCoreData;
 			sourceTree = "<group>";
@@ -114,6 +123,9 @@
 			children = (
 				BEC8634D2224DD7800AC120A /* CoreDataManagerTests.swift */,
 				BEC8634F2224DD7800AC120A /* Info.plist */,
+				BEBF7060223EE59700B7A014 /* SiteEntityTest.swift */,
+				BEBF7062223EE5B100B7A014 /* EcoDatumEntityTests.swift */,
+				BEBF7064223EE5C300B7A014 /* NotebookEntityTests.swift */,
 			);
 			path = EcoDatumCoreDataTests;
 			sourceTree = "<group>";
@@ -236,6 +248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEBF705F223DFE0C00B7A014 /* NotebookEntity.swift in Sources */,
 				BEC8637922250BDE00AC120A /* CoreDataManager.swift in Sources */,
 				BEE91FB7222B11430072FF2B /* SiteEntity.swift in Sources */,
 				BEE91FEE222B44A70072FF2B /* EcoDatumEntity.swift in Sources */,
@@ -247,7 +260,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEBF7063223EE5B100B7A014 /* EcoDatumEntityTests.swift in Sources */,
 				BEC8634E2224DD7800AC120A /* CoreDataManagerTests.swift in Sources */,
+				BEBF7065223EE5C300B7A014 /* NotebookEntityTests.swift in Sources */,
+				BEBF7061223EE59700B7A014 /* SiteEntityTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
