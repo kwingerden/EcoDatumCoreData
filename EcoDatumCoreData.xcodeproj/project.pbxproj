@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE4BF6F42240912100AAE0DA /* AltitudeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BF6F32240912100AAE0DA /* AltitudeEntity.swift */; };
+		BE4BF6F62240912E00AAE0DA /* CoordinateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BF6F52240912E00AAE0DA /* CoordinateEntity.swift */; };
 		BEBF705F223DFE0C00B7A014 /* NotebookEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBF705E223DFE0C00B7A014 /* NotebookEntity.swift */; };
 		BEBF7061223EE59700B7A014 /* SiteEntityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBF7060223EE59700B7A014 /* SiteEntityTest.swift */; };
 		BEBF7063223EE5B100B7A014 /* EcoDatumEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBF7062223EE5B100B7A014 /* EcoDatumEntityTests.swift */; };
@@ -47,6 +49,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BE4BF6F32240912100AAE0DA /* AltitudeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeEntity.swift; sourceTree = "<group>"; };
+		BE4BF6F52240912E00AAE0DA /* CoordinateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateEntity.swift; sourceTree = "<group>"; };
 		BEBF705E223DFE0C00B7A014 /* NotebookEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookEntity.swift; sourceTree = "<group>"; };
 		BEBF7060223EE59700B7A014 /* SiteEntityTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteEntityTest.swift; sourceTree = "<group>"; };
 		BEBF7062223EE5B100B7A014 /* EcoDatumEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoDatumEntityTests.swift; sourceTree = "<group>"; };
@@ -114,6 +118,8 @@
 				BEE91FB6222B11430072FF2B /* SiteEntity.swift */,
 				BEE91FED222B44A70072FF2B /* EcoDatumEntity.swift */,
 				BEBF705E223DFE0C00B7A014 /* NotebookEntity.swift */,
+				BE4BF6F32240912100AAE0DA /* AltitudeEntity.swift */,
+				BE4BF6F52240912E00AAE0DA /* CoordinateEntity.swift */,
 			);
 			path = EcoDatumCoreData;
 			sourceTree = "<group>";
@@ -248,10 +254,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE4BF6F42240912100AAE0DA /* AltitudeEntity.swift in Sources */,
 				BEBF705F223DFE0C00B7A014 /* NotebookEntity.swift in Sources */,
 				BEC8637922250BDE00AC120A /* CoreDataManager.swift in Sources */,
 				BEE91FB7222B11430072FF2B /* SiteEntity.swift in Sources */,
 				BEE91FEE222B44A70072FF2B /* EcoDatumEntity.swift in Sources */,
+				BE4BF6F62240912E00AAE0DA /* CoordinateEntity.swift in Sources */,
 				BEC863602224E0EB00AC120A /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

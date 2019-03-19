@@ -54,11 +54,26 @@ public extension SiteEntity {
         site.createdDate = Date()
         site.updatedDate = Date()
         if let l = location {
-            site.altitude = l.altitude
-            site.altitudeAccuracy = l.verticalAccuracy
-            site.coordinateAccuracy = l.horizontalAccuracy
-            site.latitude = l.coordinate.latitude
-            site.longitude = l.coordinate.longitude
+            let coordinate = (NSEntityDescription.insertNewObject(
+                forEntityName: "CoordinateEntity",
+                into: CoreDataManager.shared.ctx) as! CoordinateEntity)
+            coordinate.accuracy = l.horizontalAccuracy
+            coordinate.latitude = l.coordinate.latitude
+            coordinate.longitude = l.coordinate.longitude
+            
+            let altitude = (NSEntityDescription.insertNewObject(
+                forEntityName: "AltitudeEntity",
+                into: CoreDataManager.shared.ctx) as! AltitudeEntity)
+            altitude.altitude = l.verticalAccuracy
+            altitude.accuracy = l.altitude
+            
+            let location = (NSEntityDescription.insertNewObject(
+                forEntityName: "LocationEntity",
+                into: CoreDataManager.shared.ctx) as! LocationEntity)
+            
+            location.coordinate = coordinate
+            location.altitude = altitude
+            site.location = location
         }
         site.notebook = notebook
         

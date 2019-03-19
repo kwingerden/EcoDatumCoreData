@@ -67,7 +67,7 @@ class SiteEntityTests: XCTestCase {
         XCTAssert(try defaultNotebook.sites().count == 2)
         
         XCTAssert(try SiteEntity.find(by: "test1", in: defaultNotebook) == nil)
-        XCTAssert(try SiteEntity.find(by: "site1", in: defaultNotebook)?.altitude == 10.0)
+        XCTAssert(try SiteEntity.find(by: "site1", in: defaultNotebook)?.location?.altitude?.altitude == 10.0)
         
         try SiteEntity.deleteAll(in: defaultNotebook)
         XCTAssert(try defaultNotebook.sites().count == 0)
