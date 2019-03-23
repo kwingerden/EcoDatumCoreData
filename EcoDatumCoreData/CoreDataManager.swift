@@ -12,41 +12,59 @@ import CoreLocation
 import EcoDatumCommon
 import SwiftyBeaver
 
+private let log = SwiftyBeaver.self
+
 public class CoreDataManager {
     
-    private let log = SwiftyBeaver.self
+    let modelName: String
     
-    public lazy var context: NSManagedObjectContext = {
-        return self.container.viewContext
-    }()
+    let container: NSPersistentContainer
     
-    private let modelName: String
-    
-    private lazy var container: NSPersistentContainer = {
+    public init?(_ modelName: String,
+                 ofType storeType: String = NSSQLiteStoreType,
+                 at storeURL: URL = NSPersistentContainer.defaultDirectoryURL()) {
+        self.modelName = modelName
+        
         let bundle = Bundle(identifier: "org.ecodatum.EcoDatumCoreData")!
         let modelURL = bundle.url(forResource: "Model", withExtension: "momd")!
         let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
         let container = NSPersistentContainer(name: modelName, managedObjectModel: managedObjectModel!)
-        //container.persistentStoreDescriptions.append(NSPersistentStoreDescription(url: <#T##URL#>))
-        container.loadPersistentStores(completionHandler: persistentStoreHandler)
+        
+        switch storeType {
+        case NSInMemoryStoreType:
+            do {
+                try container.persistentStoreCoordinator.addPersistentStore(
+                    ofType: NSInMemoryStoreType,
+                    configurationName: "Default",
+                    at: nil,
+                    options: nil)
+            } catch let error as NSError {
+                log.error("Failed to add in-memory persistent store: \(error)")
+                return nil
+            }
+        case NSSQLiteStoreType:
+            do {
+                try container.persistentStoreCoordinator.addPersistentStore(
+                    ofType: NSSQLiteStoreType,
+                    configurationName: "Default",
+                    at: storeURL.appendingPathComponent(modelName),
+                    options: nil)
+            } catch let error as NSError {
+                log.error("Failed to add SQLite persistent store: \(error)")
+                return nil
+            }
+        default:
+            log.error("Store type is not supported: \(storeType)")
+            return nil
+        }
+        
+        self.container = container
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.willSaveContext),
             name: .NSManagedObjectContextWillSave,
             object: nil)
-        
-        return container
-    }()
-    
-    public init(modelName: String) {
-        self.modelName = modelName
-    }
-    
-    public func save() throws {
-        guard context.hasChanges else {
-            return
-        }
-        try context.save()
     }
     
     private func persistentStoreHandler(description: NSPersistentStoreDescription, error: Error?) {

@@ -9,13 +9,11 @@
 import CoreData
 import CoreLocation
 import Foundation
-import os
-
-fileprivate let log = OSLog(
-    subsystem: "org.ecodatum.EcoDatumCoreData",
-    category: "NotebookEntity")
+import SwiftyBeaver
 
 public typealias NotebookEntitySort = (NotebookEntity, NotebookEntity) throws -> Bool
+
+private let log = SwiftyBeaver.self
 
 public extension NotebookEntity {
 
@@ -48,7 +46,7 @@ public extension NotebookEntity {
         return sort
     }
     
-    public static func new(_ cdm: CoreDataManager,
+    public static func new(_ context: NSManagedObjectContext,
                            id: UUID? = nil,
                            name: String = DEFAULT_NAME,
                            createdDate: Date? = nil,
@@ -57,13 +55,13 @@ public extension NotebookEntity {
         if name.isEmpty {
             throw EntityError.InvalidName
         }
-        if let _ = try find(cdm, by: name) {
+        if let _ = try find(context, by: name) {
             throw EntityError.NameAlreadyExists(name: name)
         }
         
         let notebook = NSEntityDescription.insertNewObject(
             forEntityName: "NotebookEntity",
-            into: cdm.context) as! NotebookEntity
+            into: context) as! NotebookEntity
         
         notebook.id = id == nil ? UUID() : id!
         notebook.name = name
@@ -79,40 +77,40 @@ public extension NotebookEntity {
         return notebook
     }
     
-    public static func find(_ cdm: CoreDataManager,
+    public static func find(_ context: NSManagedObjectContext,
                             by name: String) throws -> NotebookEntity? {
         let request: NSFetchRequest<NotebookEntity> = NotebookEntity.fetchRequest()
         request.predicate = NSPredicate(format: "name ==[c] %@", name)
-        let result = try cdm.context.fetch(request)
+        let result = try context.fetch(request)
         if result.count == 0 {
             return nil
         }
         if result.count > 1 {
-            os_log("More than one Notebook found with name: %@", log: log, type: .error, name)
+            log.warning("More than one Notebook found with name: \(name)")
         }
         return result[0]
     }
     
-    public static func all(_ cdm: CoreDataManager,
+    public static func all(_ context: NSManagedObjectContext,
                            sorted by: NotebookEntitySort = sortByName) throws -> [NotebookEntity] {
         let request: NSFetchRequest<NotebookEntity> = NotebookEntity.fetchRequest()
-        return try cdm.context.fetch(request).sorted(by: by)
+        return try context.fetch(request).sorted(by: by)
     }
     
-    public func delete(_ cdm: CoreDataManager) {
-        cdm.context.delete(self)
+    public func delete(_ context: NSManagedObjectContext) {
+        context.delete(self)
     }
     
-    public static func deleteAll(_ cdm: CoreDataManager) throws {
-        for notebook in try all(cdm) {
-            notebook.delete(cdm)
+    public static func deleteAll(_ context: NSManagedObjectContext) throws {
+        for notebook in try all(context) {
+            notebook.delete(context)
         }
     }
     
-    public func newSite(_ cdm: CoreDataManager,
+    public func newSite(_ context: NSManagedObjectContext,
                         name: String,
                         at location: CLLocation? = nil) throws -> SiteEntity {
-        return try SiteEntity.new(cdm, name: name, at: location, in: self)
+        return try SiteEntity.new(context, name: name, at: location, in: self)
     }
     
     public func findSite(by name: String) throws -> SiteEntity? {

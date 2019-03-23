@@ -7,28 +7,34 @@
 //
 
 import CoreLocation
+import CoreData
 import EcoDatumCommon
 import Foundation
 import XCTest
+import SwiftyBeaver
 @testable import EcoDatumCoreData
 
 class EcoDatumEntityTests: XCTestCase {
     
-    /*
+    let log = SwiftyBeaver.self
+    let consoleDestination = ConsoleDestination()
+    
     override func setUp() {
-        do {
-            try CoreDataManager.shared.reset()
-        } catch {
-            XCTFail("Unexpected error: \(error)")
+        if !log.destinations.contains(consoleDestination) {
+            log.addDestination(consoleDestination)
         }
     }
     
-    override func tearDown() {
-    }
-    
     func test1() throws {
-        let defaultNotebook = try NotebookEntity.new()
+        guard let cdm1 = CoreDataManager.init("EcoDatumV1", ofType: NSInMemoryStoreType) else {
+            XCTFail()
+            return
+        }
+        let context = cdm1.container.newBackgroundContext()
+        
+        let defaultNotebook = try NotebookEntity.new(context)
         let site1 = try defaultNotebook.newSite(
+            context,
             name: "site1",
             at: CLLocation(
                 coordinate: CLLocationCoordinate2DMake(37.33182, -122.03118),
@@ -37,26 +43,33 @@ class EcoDatumEntityTests: XCTestCase {
                 verticalAccuracy: 10.0,
                 timestamp: Date()))
         let _ = try site1.newEcoDatum(
+            context,
             collectionDate: "2019-02-24T04:38:31Z".iso8601Date()!,
             primaryType: "primaryType1",
             secondaryType: "secondaryType1",
             dataType: "dataType1",
             dataValue: "data1".data(using: .utf8)!)
         
+        try context.save()
+        
         XCTAssert(site1.ecoData?.count == 1)
         
         let _ = try site1.newEcoDatum(
+            context,
             collectionDate: "2019-03-17T14:12:10Z".iso8601Date()!,
             primaryType: "primaryType2",
             secondaryType: "secondaryType2",
             dataType: "dataType2",
             dataValue: "data2".data(using: .utf8)!)
         let _ = try site1.newEcoDatum(
+            context,
             collectionDate: "2018-11-01T10:22:45Z".iso8601Date()!,
             primaryType: "primaryType3",
             secondaryType: "secondaryType3",
             dataType: "dataType3",
             dataValue: "data3".data(using: .utf8)!)
+        
+        try context.save()
         
         XCTAssert(site1.ecoData?.count == 3)
         
@@ -71,6 +84,5 @@ class EcoDatumEntityTests: XCTestCase {
         XCTAssert(ecoDataAscending[2].primaryType == "primaryType2")
         
     }
- */
     
 }

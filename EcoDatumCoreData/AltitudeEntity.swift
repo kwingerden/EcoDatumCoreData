@@ -9,11 +9,6 @@
 import CoreData
 import CoreLocation
 import Foundation
-import os
-
-fileprivate let log = OSLog(
-    subsystem: "org.ecodatum.EcoDatumCoreData",
-    category: "AltitudeEntity")
 
 public extension AltitudeEntity {
 

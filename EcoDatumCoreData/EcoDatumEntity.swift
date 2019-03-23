@@ -8,11 +8,6 @@
 
 import CoreData
 import Foundation
-import os
-
-fileprivate let log = OSLog(
-    subsystem: "org.ecodatum.EcoDatumCoreData",
-    category: "EcoDatumEntity")
 
 public typealias EcoDatumEntitySort = (EcoDatumEntity, EcoDatumEntity) throws -> Bool
 
@@ -39,7 +34,7 @@ public extension EcoDatumEntity {
         return sort
     }
     
-    public static func new(_ cdm: CoreDataManager,
+    public static func new(_ context: NSManagedObjectContext,
                            collectionDate: Date,
                            primaryType: String,
                            secondaryType: String,
@@ -64,7 +59,7 @@ public extension EcoDatumEntity {
         
         let ecoDatum = NSEntityDescription.insertNewObject(
             forEntityName: "EcoDatumEntity",
-            into: cdm.context) as! EcoDatumEntity
+            into: context) as! EcoDatumEntity
         
         ecoDatum.id = UUID()
         ecoDatum.createdDate = Date()
@@ -90,9 +85,9 @@ public extension EcoDatumEntity {
         return ecoDatum
     }
     
-    public func delete(_ cdm: CoreDataManager) {
+    public func delete(context: NSManagedObjectContext) {
         site?.removeFromEcoData(self)
-        cdm.context.delete(self)
+        context.delete(self)
     }
     
     public static func deleteAll(in site: SiteEntity) throws {
