@@ -1,1 +1,2 @@
-github "kwingerden/EcoDatumCommon" "v0.0.8"
+github "SwiftyBeaver/SwiftyBeaver" "1.6.2"
+github "kwingerden/EcoDatumCommon" "v0.0.9"

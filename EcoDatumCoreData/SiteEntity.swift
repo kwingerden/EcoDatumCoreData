@@ -32,14 +32,13 @@ public extension SiteEntity {
         return sort
     }
     
-    public static func new(name: String,
+    public static func new(_ cdm: CoreDataManager,
+                           name: String,
                            at location: CLLocation? = nil,
-                           in notebook: NotebookEntity) throws -> SiteEntity {
+                           in notebook: NotebookEntity? = nil,
+                           with ecoData: [EcoDatumEntity]? = nil) throws -> SiteEntity {
         if name.isEmpty {
             throw EntityError.InvalidName
-        }
-        if let _ = try find(by: name, in: notebook) {
-            throw EntityError.NameAlreadyExists(name: name)
         }
         if let location = location, !CLLocationCoordinate2DIsValid(location.coordinate) {
             throw EntityError.InvalidLocation(location: location)
@@ -47,65 +46,79 @@ public extension SiteEntity {
         
         let site = NSEntityDescription.insertNewObject(
             forEntityName: "SiteEntity",
-            into: CoreDataManager.shared.ctx) as! SiteEntity
+            into: cdm.context) as! SiteEntity
         
         site.id = UUID()
         site.name = name
         site.createdDate = Date()
         site.updatedDate = Date()
+        
         if let l = location {
             let coordinate = (NSEntityDescription.insertNewObject(
                 forEntityName: "CoordinateEntity",
-                into: CoreDataManager.shared.ctx) as! CoordinateEntity)
+                into: cdm.context) as! CoordinateEntity)
             coordinate.accuracy = l.horizontalAccuracy
             coordinate.latitude = l.coordinate.latitude
             coordinate.longitude = l.coordinate.longitude
             
             let altitude = (NSEntityDescription.insertNewObject(
                 forEntityName: "AltitudeEntity",
-                into: CoreDataManager.shared.ctx) as! AltitudeEntity)
+                into: cdm.context) as! AltitudeEntity)
             altitude.altitude = l.verticalAccuracy
             altitude.accuracy = l.altitude
             
             let location = (NSEntityDescription.insertNewObject(
                 forEntityName: "LocationEntity",
-                into: CoreDataManager.shared.ctx) as! LocationEntity)
+                into: cdm.context) as! LocationEntity)
             
             location.coordinate = coordinate
             location.altitude = altitude
             site.location = location
         }
-        site.notebook = notebook
+        
+        if let notebook = notebook {
+            notebook.addToSites(site)
+        }
+        
+        if let ecoData = ecoData {
+            for ecoDatum in ecoData {
+                site.addToEcoData(ecoDatum)
+            }
+        }
         
         return site
     }
     
-    public static func find(by name: String, in notebook: NotebookEntity) throws -> SiteEntity? {
+    public static func find(by name: String,
+                            in notebook: NotebookEntity) throws -> SiteEntity? {
         return try notebook.sites().first {
             $0.name?.lowercased() == name
         }
     }
     
-    public func delete() {
+    public func delete(_ cdm: CoreDataManager) {
         notebook?.removeFromSites(self)
-        CoreDataManager.shared.ctx.delete(self)
+        cdm.context.delete(self)
     }
     
-    public static func deleteAll(in notebook: NotebookEntity) throws {
+    public static func deleteAll(_ cdm: CoreDataManager,
+                                 in notebook: NotebookEntity) throws {
         for site in try notebook.sites() {
-            site.delete()
+            site.delete(cdm)
         }
     }
     
-    public func newEcoDatum(collectionDate: Date,
+    public func newEcoDatum(_ cdm: CoreDataManager,
+                            collectionDate: Date,
                             primaryType: String,
                             secondaryType: String,
                             dataType: String,
                             dataUnit: String? = nil,
                             dataValue: Data,
                             parent: EcoDatumEntity? = nil,
-                            children: Set<EcoDatumEntity>? = nil) throws -> EcoDatumEntity {
+                            children: [EcoDatumEntity]? = nil) throws -> EcoDatumEntity {
         return try EcoDatumEntity.new(
+            cdm,
             collectionDate: collectionDate,
             primaryType: primaryType,
             secondaryType: secondaryType,
@@ -118,7 +131,12 @@ public extension SiteEntity {
     }
     
     public func deleteAllEcoData() throws {
-        try EcoDatumEntity.deleteAll(in: self)
+        if let ecoData = ecoData {
+            for ecoDatum in ecoData {
+                let ecoDatumEntity = ecoDatum as! EcoDatumEntity
+                removeFromEcoData(ecoDatumEntity)
+            }
+        }
     }
     
     public func ecoData(sorted by: EcoDatumEntitySort = EcoDatumEntity.sortDescendingByCollectionDate) throws -> [EcoDatumEntity] {

@@ -11,28 +11,32 @@ import Foundation
 import CoreData
 import CoreLocation
 import EcoDatumCommon
+import SwiftyBeaver
 @testable import EcoDatumCoreData
 
 class CoreDataManagerTests: XCTestCase {
     
-    var persistentContainer: NSPersistentContainer!
-    
-    let mgr = CoreDataManager.shared
+    let log = SwiftyBeaver.self
+    let consoleDestination = ConsoleDestination()
     
     override func setUp() {
-        do {
-            try mgr.reset()
-        } catch {
-            XCTFail("Unexpected error: \(error)")
+        if !log.destinations.contains(consoleDestination) {
+            log.addDestination(consoleDestination)
         }
     }
     
-    override func tearDown() {
-    }
-    
     func test1() throws {
-        let defaultNotebook = try NotebookEntity.new()
-        print(defaultNotebook.id!)
+        let cdm1 = CoreDataManager.init(modelName: "EcoDatumV1")
+        let cdm2 = CoreDataManager.init(modelName: "EcoDatumV2")
+        
+        let defaultNotebook1 = try NotebookEntity.new(cdm1)
+        try cdm1.save()
+        
+        let defaultNotebook2 = try NotebookEntity.new(cdm2)
+        try cdm2.save()
+        
+        print(defaultNotebook1.id!)
+        print(defaultNotebook2.id!)
     }
     
 }

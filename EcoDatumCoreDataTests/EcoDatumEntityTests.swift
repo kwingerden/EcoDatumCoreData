@@ -14,6 +14,7 @@ import XCTest
 
 class EcoDatumEntityTests: XCTestCase {
     
+    /*
     override func setUp() {
         do {
             try CoreDataManager.shared.reset()
@@ -70,4 +71,6 @@ class EcoDatumEntityTests: XCTestCase {
         XCTAssert(ecoDataAscending[2].primaryType == "primaryType2")
         
     }
+ */
+    
 }

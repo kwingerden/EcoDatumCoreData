@@ -5,7 +5,7 @@
         <attribute name="altitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="location" maxCount="1" deletionRule="Nullify" destinationEntity="LocationEntity" inverseName="altitude" inverseEntity="LocationEntity" syncable="YES"/>
     </entity>
-    <entity name="CoordinateEntity" representedClassName="CoordinateEntity" syncable="YES" codeGenerationType="class">
+    <entity name="CoordinateEntity" representedClassName=".CoordinateEntity" syncable="YES" codeGenerationType="class">
         <attribute name="accuracy" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -23,7 +23,7 @@
         <attribute name="updatedDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="children" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EcoDatumEntity" inverseName="parent" inverseEntity="EcoDatumEntity" syncable="YES"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EcoDatumEntity" inverseName="children" inverseEntity="EcoDatumEntity" syncable="YES"/>
-        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="SiteEntity" inverseName="ecoData" inverseEntity="SiteEntity" syncable="YES"/>
+        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SiteEntity" inverseName="ecoData" inverseEntity="SiteEntity" syncable="YES"/>
     </entity>
     <entity name="LocationEntity" representedClassName=".LocationEntity" syncable="YES" codeGenerationType="class">
         <relationship name="altitude" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AltitudeEntity" inverseName="location" inverseEntity="AltitudeEntity" syncable="YES"/>
@@ -44,14 +44,14 @@
         <attribute name="updatedDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="ecoData" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EcoDatumEntity" inverseName="site" inverseEntity="EcoDatumEntity" syncable="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="LocationEntity" inverseName="site" inverseEntity="LocationEntity" syncable="YES"/>
-        <relationship name="notebook" maxCount="1" deletionRule="Nullify" destinationEntity="NotebookEntity" inverseName="sites" inverseEntity="NotebookEntity" syncable="YES"/>
+        <relationship name="notebook" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NotebookEntity" inverseName="sites" inverseEntity="NotebookEntity" syncable="YES"/>
     </entity>
     <elements>
-        <element name="EcoDatumEntity" positionX="-63" positionY="-18" width="128" height="225"/>
-        <element name="NotebookEntity" positionX="-54" positionY="81" width="128" height="120"/>
-        <element name="SiteEntity" positionX="-54" positionY="-9" width="128" height="150"/>
         <element name="AltitudeEntity" positionX="-54" positionY="81" width="128" height="90"/>
         <element name="CoordinateEntity" positionX="-45" positionY="90" width="128" height="105"/>
+        <element name="EcoDatumEntity" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="LocationEntity" positionX="-27" positionY="99" width="128" height="90"/>
+        <element name="NotebookEntity" positionX="-54" positionY="81" width="128" height="120"/>
+        <element name="SiteEntity" positionX="-54" positionY="-9" width="128" height="150"/>
     </elements>
 </model>

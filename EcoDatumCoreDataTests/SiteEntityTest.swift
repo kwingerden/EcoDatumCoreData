@@ -13,7 +13,8 @@ import XCTest
 @testable import EcoDatumCoreData
 
 class SiteEntityTests: XCTestCase {
-        
+    
+    /*
     override func setUp() {
         do {
             try CoreDataManager.shared.reset()
@@ -37,6 +38,8 @@ class SiteEntityTests: XCTestCase {
                 horizontalAccuracy: 10.0,
                 verticalAccuracy: 10.0,
                 timestamp: Date()))
+        
+        try CoreDataManager.shared.save()
         
         do {
             let _ = try SiteEntity.new(name: "site1", in: defaultNotebook)
@@ -72,5 +75,6 @@ class SiteEntityTests: XCTestCase {
         try SiteEntity.deleteAll(in: defaultNotebook)
         XCTAssert(try defaultNotebook.sites().count == 0)
     }
+ */
     
 }

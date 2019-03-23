@@ -39,15 +39,16 @@ public extension EcoDatumEntity {
         return sort
     }
     
-    public static func new(collectionDate: Date,
+    public static func new(_ cdm: CoreDataManager,
+                           collectionDate: Date,
                            primaryType: String,
                            secondaryType: String,
                            dataType: String,
                            dataUnit: String? = nil,
                            dataValue: Data,
                            parent: EcoDatumEntity? = nil,
-                           children: Set<EcoDatumEntity>? = nil,
-                           to site: SiteEntity) throws -> EcoDatumEntity {
+                           children: [EcoDatumEntity]? = nil,
+                           to site: SiteEntity? = nil) throws -> EcoDatumEntity {
         if primaryType.isEmpty {
             throw EntityError.InvalidPrimaryType(primaryType: primaryType)
         }
@@ -63,7 +64,7 @@ public extension EcoDatumEntity {
         
         let ecoDatum = NSEntityDescription.insertNewObject(
             forEntityName: "EcoDatumEntity",
-            into: CoreDataManager.shared.ctx) as! EcoDatumEntity
+            into: cdm.context) as! EcoDatumEntity
         
         ecoDatum.id = UUID()
         ecoDatum.createdDate = Date()
@@ -75,25 +76,27 @@ public extension EcoDatumEntity {
         ecoDatum.dataUnit = dataUnit
         ecoDatum.dataValue = dataValue
         ecoDatum.parent = parent
+        
         if let children = children {
-            ecoDatum.children = NSSet(set: children)
+            ecoDatum.children?.addingObjects(from: children)
         } else {
             ecoDatum.children = nil
         }
-        ecoDatum.site = site
+        
+        if let site = site {
+            site.addToEcoData(ecoDatum)
+        }
         
         return ecoDatum
     }
     
-    public func delete() {
+    public func delete(_ cdm: CoreDataManager) {
         site?.removeFromEcoData(self)
-        CoreDataManager.shared.ctx.delete(self)
+        cdm.context.delete(self)
     }
     
     public static func deleteAll(in site: SiteEntity) throws {
-        for ecoDatum in try site.ecoData() {
-            ecoDatum.delete()
-        }
+        try site.deleteAllEcoData()
     }
     
 }

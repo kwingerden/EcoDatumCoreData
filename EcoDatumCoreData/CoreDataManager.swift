@@ -9,45 +9,52 @@
 import Foundation
 import CoreData
 import CoreLocation
-import os
+import EcoDatumCommon
+import SwiftyBeaver
 
 public class CoreDataManager {
     
-    public static let shared = CoreDataManager()
+    private let log = SwiftyBeaver.self
     
-    lazy var ctx = pc.viewContext
+    public lazy var context: NSManagedObjectContext = {
+        return self.container.viewContext
+    }()
     
-    private lazy var pc: NSPersistentContainer = {
+    private let modelName: String
+    
+    private lazy var container: NSPersistentContainer = {
         let bundle = Bundle(identifier: "org.ecodatum.EcoDatumCoreData")!
         let modelURL = bundle.url(forResource: "Model", withExtension: "momd")!
-        let managedObjectModel =  NSManagedObjectModel(contentsOf: modelURL)
-        let container = NSPersistentContainer(name: "Model", managedObjectModel: managedObjectModel!)
-        container.loadPersistentStores {
-            (storeDescription, err) in
-            if let err = err {
-                fatalError("Failed to load Core Data Model: \(err)")
-            }
-        }
+        let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
+        let container = NSPersistentContainer(name: modelName, managedObjectModel: managedObjectModel!)
+        //container.persistentStoreDescriptions.append(NSPersistentStoreDescription(url: <#T##URL#>))
+        container.loadPersistentStores(completionHandler: persistentStoreHandler)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.willSaveContext),
+            name: .NSManagedObjectContextWillSave,
+            object: nil)
+        
         return container
     }()
     
-    private let log = OSLog(subsystem: "org.ecodatum.EcoDatumCoreData", category: "CoreDataManager")
-    
-    private init() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(willSaveContext),
-            name: .NSManagedObjectContextWillSave,
-            object: nil)
-    }
-    
-    public func reset() throws {
-        try NotebookEntity.deleteAll()
-        try save()
+    public init(modelName: String) {
+        self.modelName = modelName
     }
     
     public func save() throws {
-        try ctx.save()
+        guard context.hasChanges else {
+            return
+        }
+        try context.save()
+    }
+    
+    private func persistentStoreHandler(description: NSPersistentStoreDescription, error: Error?) {
+        if let error = error as NSError? {
+            log.error("Failed to create persistent store for model: \(modelName), \(error.description), \(error.userInfo)")
+        } else {
+            log.info("Successfully created persistent store for model: \(modelName), \(description.url!.absoluteString)")
+        }
     }
     
     @objc private func willSaveContext(_ notification: NSNotification) {

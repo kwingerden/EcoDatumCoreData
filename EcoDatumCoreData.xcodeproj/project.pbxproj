@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE3F16332246BE9400694511 /* EcoDatumCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3F16322246BE9400694511 /* EcoDatumCommon.framework */; };
+		BE3F16452246D69200694511 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3F16442246D69200694511 /* SwiftyBeaver.framework */; };
+		BE3F16462246D7C600694511 /* SwiftyBeaver.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BE3F16442246D69200694511 /* SwiftyBeaver.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BE4BF6F42240912100AAE0DA /* AltitudeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BF6F32240912100AAE0DA /* AltitudeEntity.swift */; };
 		BE4BF6F62240912E00AAE0DA /* CoordinateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BF6F52240912E00AAE0DA /* CoordinateEntity.swift */; };
 		BEBF705F223DFE0C00B7A014 /* NotebookEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBF705E223DFE0C00B7A014 /* NotebookEntity.swift */; };
@@ -20,9 +23,7 @@
 		BEC8637922250BDE00AC120A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8637822250BDE00AC120A /* CoreDataManager.swift */; };
 		BEE91FB7222B11430072FF2B /* SiteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE91FB6222B11430072FF2B /* SiteEntity.swift */; };
 		BEE91FEE222B44A70072FF2B /* EcoDatumEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE91FED222B44A70072FF2B /* EcoDatumEntity.swift */; };
-		BEE91FF3222B537A0072FF2B /* EcoDatumCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEE91FF2222B537A0072FF2B /* EcoDatumCommon.framework */; };
 		BEE91FF4222B53C30072FF2B /* EcoDatumCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEE91FF2222B537A0072FF2B /* EcoDatumCommon.framework */; };
-		BEE91FF7222B54890072FF2B /* EcoDatumCommon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEE91FF2222B537A0072FF2B /* EcoDatumCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,13 +43,15 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BEE91FF7222B54890072FF2B /* EcoDatumCommon.framework in CopyFiles */,
+				BE3F16462246D7C600694511 /* SwiftyBeaver.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BE3F16322246BE9400694511 /* EcoDatumCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EcoDatumCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE3F16442246D69200694511 /* SwiftyBeaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyBeaver.framework; path = Carthage/Build/iOS/SwiftyBeaver.framework; sourceTree = "<group>"; };
 		BE4BF6F32240912100AAE0DA /* AltitudeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeEntity.swift; sourceTree = "<group>"; };
 		BE4BF6F52240912E00AAE0DA /* CoordinateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateEntity.swift; sourceTree = "<group>"; };
 		BEBF705E223DFE0C00B7A014 /* NotebookEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookEntity.swift; sourceTree = "<group>"; };
@@ -73,7 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEE91FF3222B537A0072FF2B /* EcoDatumCommon.framework in Frameworks */,
+				BE3F16332246BE9400694511 /* EcoDatumCommon.framework in Frameworks */,
+				BE3F16452246D69200694511 /* SwiftyBeaver.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +143,8 @@
 		BEE91FF1222B537A0072FF2B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BE3F16442246D69200694511 /* SwiftyBeaver.framework */,
+				BE3F16322246BE9400694511 /* EcoDatumCommon.framework */,
 				BEE91FF2222B537A0072FF2B /* EcoDatumCommon.framework */,
 			);
 			name = Frameworks;

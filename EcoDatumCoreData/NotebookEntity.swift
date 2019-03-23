@@ -48,31 +48,42 @@ public extension NotebookEntity {
         return sort
     }
     
-    public static func new(name: String = DEFAULT_NAME) throws -> NotebookEntity {
+    public static func new(_ cdm: CoreDataManager,
+                           id: UUID? = nil,
+                           name: String = DEFAULT_NAME,
+                           createdDate: Date? = nil,
+                           updatedDate: Date? = nil,
+                           sites: [SiteEntity]? = nil) throws -> NotebookEntity {
         if name.isEmpty {
             throw EntityError.InvalidName
         }
-        if let _ = try find(by: name) {
+        if let _ = try find(cdm, by: name) {
             throw EntityError.NameAlreadyExists(name: name)
         }
         
         let notebook = NSEntityDescription.insertNewObject(
             forEntityName: "NotebookEntity",
-            into: CoreDataManager.shared.ctx) as! NotebookEntity
+            into: cdm.context) as! NotebookEntity
         
-        notebook.id = UUID()
+        notebook.id = id == nil ? UUID() : id!
         notebook.name = name
-        notebook.createdDate = Date()
-        notebook.updatedDate = Date()
-        notebook.sites = nil
+        notebook.createdDate = createdDate == nil ? Date() : createdDate!
+        notebook.updatedDate = updatedDate == nil ? Date() : updatedDate!
+        
+        if let sites = sites {
+            for site in sites {
+                notebook.addToSites(site)
+            }
+        }
         
         return notebook
     }
     
-    public static func find(by name: String) throws -> NotebookEntity? {
+    public static func find(_ cdm: CoreDataManager,
+                            by name: String) throws -> NotebookEntity? {
         let request: NSFetchRequest<NotebookEntity> = NotebookEntity.fetchRequest()
         request.predicate = NSPredicate(format: "name ==[c] %@", name)
-        let result = try CoreDataManager.shared.ctx.fetch(request)
+        let result = try cdm.context.fetch(request)
         if result.count == 0 {
             return nil
         }
@@ -82,23 +93,26 @@ public extension NotebookEntity {
         return result[0]
     }
     
-    public static func all(sorted by: NotebookEntitySort = sortByName) throws -> [NotebookEntity] {
+    public static func all(_ cdm: CoreDataManager,
+                           sorted by: NotebookEntitySort = sortByName) throws -> [NotebookEntity] {
         let request: NSFetchRequest<NotebookEntity> = NotebookEntity.fetchRequest()
-        return try CoreDataManager.shared.ctx.fetch(request).sorted(by: by)
+        return try cdm.context.fetch(request).sorted(by: by)
     }
     
-    public func delete() {
-        CoreDataManager.shared.ctx.delete(self)
+    public func delete(_ cdm: CoreDataManager) {
+        cdm.context.delete(self)
     }
     
-    public static func deleteAll() throws {
-        for notebook in try all() {
-            notebook.delete()
+    public static func deleteAll(_ cdm: CoreDataManager) throws {
+        for notebook in try all(cdm) {
+            notebook.delete(cdm)
         }
     }
     
-    public func newSite(name: String, at location: CLLocation? = nil) throws -> SiteEntity {
-        return try SiteEntity.new(name: name, at: location, in: self)
+    public func newSite(_ cdm: CoreDataManager,
+                        name: String,
+                        at location: CLLocation? = nil) throws -> SiteEntity {
+        return try SiteEntity.new(cdm, name: name, at: location, in: self)
     }
     
     public func findSite(by name: String) throws -> SiteEntity? {
@@ -109,11 +123,16 @@ public extension NotebookEntity {
         guard let site = try findSite(by: name) else {
             throw EntityError.SiteDoesNotExist(name: name)
         }
-        site.delete()
+        removeFromSites(site)
     }
     
     public func deleteAllSites() throws {
-        return try SiteEntity.deleteAll(in: self)
+        if let sites = sites {
+            for site in sites {
+                let siteEntity = site as! SiteEntity
+                removeFromSites(siteEntity)
+            }
+        }
     }
     
     public func sites(sorted by: SiteEntitySort = SiteEntity.sortByName) throws -> [SiteEntity] {

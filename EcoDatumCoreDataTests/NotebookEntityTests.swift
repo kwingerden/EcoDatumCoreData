@@ -13,6 +13,7 @@ import XCTest
 
 class NotebookEntityTests: XCTestCase {
     
+    /*
     override func setUp() {
         do {
             try CoreDataManager.shared.reset()
@@ -70,5 +71,6 @@ class NotebookEntityTests: XCTestCase {
         XCTAssert(notebooks[1].name == "notebook2")
         XCTAssert(notebooks[2].name == "notebook3")
     }
+ */
     
 }
