@@ -16,7 +16,7 @@ public typealias NotebookEntitySort = (NotebookEntity, NotebookEntity) throws ->
 private let log = SwiftyBeaver.self
 
 public extension NotebookEntity {
-
+    
     public static let DEFAULT_NAME = "Default"
     
     public enum EntityError: Error {
@@ -79,16 +79,12 @@ public extension NotebookEntity {
     
     public static func find(_ context: NSManagedObjectContext,
                             by name: String) throws -> NotebookEntity? {
-        let request: NSFetchRequest<NotebookEntity> = NotebookEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "name ==[c] %@", name)
-        let result = try context.fetch(request)
-        if result.count == 0 {
-            return nil
+        guard let fetchRequest: NSFetchRequest<NotebookEntity> = context.fetchRequestTemplate(
+            for: "FetchNotebookByName", with: ["NAME": name]) else {
+                return nil
         }
-        if result.count > 1 {
-            log.warning("More than one Notebook found with name: \(name)")
-        }
-        return result[0]
+        let fetchResult = try context.fetch(fetchRequest)
+        return fetchResult.count == 0 ? nil : fetchResult[0]
     }
     
     public static func all(_ context: NSManagedObjectContext,

@@ -46,6 +46,7 @@
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="LocationEntity" inverseName="site" inverseEntity="LocationEntity" syncable="YES"/>
         <relationship name="notebook" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NotebookEntity" inverseName="sites" inverseEntity="NotebookEntity" syncable="YES"/>
     </entity>
+    <fetchRequest name="FetchNotebookByName" entity="NotebookEntity" predicateString="name ==[c] $NAME" fetchLimit="1"/>
     <elements>
         <element name="AltitudeEntity" positionX="-54" positionY="81" width="128" height="90"/>
         <element name="CoordinateEntity" positionX="-45" positionY="90" width="128" height="105"/>

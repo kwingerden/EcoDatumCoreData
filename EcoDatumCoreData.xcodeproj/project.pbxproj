@@ -10,6 +10,7 @@
 		BE3F16332246BE9400694511 /* EcoDatumCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3F16322246BE9400694511 /* EcoDatumCommon.framework */; };
 		BE3F16452246D69200694511 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3F16442246D69200694511 /* SwiftyBeaver.framework */; };
 		BE3F16462246D7C600694511 /* SwiftyBeaver.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BE3F16442246D69200694511 /* SwiftyBeaver.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BE3F164822474A2B00694511 /* ManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3F164722474A2B00694511 /* ManagedObjectContext.swift */; };
 		BE4BF6F42240912100AAE0DA /* AltitudeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BF6F32240912100AAE0DA /* AltitudeEntity.swift */; };
 		BE4BF6F62240912E00AAE0DA /* CoordinateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4BF6F52240912E00AAE0DA /* CoordinateEntity.swift */; };
 		BEBF705F223DFE0C00B7A014 /* NotebookEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBF705E223DFE0C00B7A014 /* NotebookEntity.swift */; };
@@ -52,6 +53,7 @@
 /* Begin PBXFileReference section */
 		BE3F16322246BE9400694511 /* EcoDatumCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EcoDatumCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE3F16442246D69200694511 /* SwiftyBeaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyBeaver.framework; path = Carthage/Build/iOS/SwiftyBeaver.framework; sourceTree = "<group>"; };
+		BE3F164722474A2B00694511 /* ManagedObjectContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectContext.swift; sourceTree = "<group>"; };
 		BE4BF6F32240912100AAE0DA /* AltitudeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeEntity.swift; sourceTree = "<group>"; };
 		BE4BF6F52240912E00AAE0DA /* CoordinateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateEntity.swift; sourceTree = "<group>"; };
 		BEBF705E223DFE0C00B7A014 /* NotebookEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookEntity.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				BEBF705E223DFE0C00B7A014 /* NotebookEntity.swift */,
 				BE4BF6F32240912100AAE0DA /* AltitudeEntity.swift */,
 				BE4BF6F52240912E00AAE0DA /* CoordinateEntity.swift */,
+				BE3F164722474A2B00694511 /* ManagedObjectContext.swift */,
 			);
 			path = EcoDatumCoreData;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				BEE91FB7222B11430072FF2B /* SiteEntity.swift in Sources */,
 				BEE91FEE222B44A70072FF2B /* EcoDatumEntity.swift in Sources */,
 				BE4BF6F62240912E00AAE0DA /* CoordinateEntity.swift in Sources */,
+				BE3F164822474A2B00694511 /* ManagedObjectContext.swift in Sources */,
 				BEC863602224E0EB00AC120A /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
