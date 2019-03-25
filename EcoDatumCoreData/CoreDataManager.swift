@@ -20,6 +20,8 @@ public class CoreDataManager {
     
     let container: NSPersistentContainer
     
+    let mainContext: NSManagedObjectContext
+    
     public init?(_ modelName: String,
                  ofType storeType: String = NSSQLiteStoreType,
                  at storeURL: URL = NSPersistentContainer.defaultDirectoryURL()) {
@@ -59,6 +61,7 @@ public class CoreDataManager {
         }
         
         self.container = container
+        self.mainContext = container.viewContext
         
         NotificationCenter.default.addObserver(
             self,
@@ -67,11 +70,37 @@ public class CoreDataManager {
             object: nil)
     }
     
-    private func persistentStoreHandler(description: NSPersistentStoreDescription, error: Error?) {
-        if let error = error as NSError? {
-            log.error("Failed to create persistent store for model: \(modelName), \(error.description), \(error.userInfo)")
-        } else {
-            log.info("Successfully created persistent store for model: \(modelName), \(description.url!.absoluteString)")
+    public func newDerivedContext() -> NSManagedObjectContext {
+        return container.newBackgroundContext()
+    }
+    
+    public func saveContext() {
+        saveContext(mainContext)
+    }
+    
+    public func saveContext(_ context: NSManagedObjectContext) {
+        if context != mainContext {
+            saveDerivedContext(context)
+            return
+        }
+        
+        context.perform {
+            do {
+                try context.save()
+            } catch let error as NSError {
+                log.error("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+    }
+    
+    public func saveDerivedContext(_ context: NSManagedObjectContext) {
+        context.perform {
+            do {
+                try context.save()
+            } catch let error as NSError {
+                log.error("Unresolved error \(error), \(error.userInfo)")
+            }
+            self.saveContext(self.mainContext)
         }
     }
     

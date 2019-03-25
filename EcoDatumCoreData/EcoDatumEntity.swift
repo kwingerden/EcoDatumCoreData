@@ -13,6 +13,7 @@ public typealias EcoDatumEntitySort = (EcoDatumEntity, EcoDatumEntity) throws ->
 
 public extension EcoDatumEntity {
     
+    /*
     public enum EntityError: Error {
         case InvalidPrimaryType(primaryType: String)
         case InvalidSecondaryType(secondaryType: String)
@@ -93,5 +94,6 @@ public extension EcoDatumEntity {
     public static func deleteAll(in site: SiteEntity) throws {
         try site.deleteAllEcoData()
     }
+ */
     
 }

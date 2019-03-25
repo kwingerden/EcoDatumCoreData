@@ -11,39 +11,41 @@ import CoreLocation
 import Foundation
 import SwiftyBeaver
 
-public typealias NotebookEntitySort = (NotebookEntity, NotebookEntity) throws -> Bool
+// public typealias NotebookEntitySort = (NotebookEntity, NotebookEntity) throws -> Bool
 
-private let log = SwiftyBeaver.self
+// private let log = SwiftyBeaver.self
 
 public extension NotebookEntity {
     
+    /*
+    public enum EntityError: Error {
+        case InvalidEntity(message: String)
+        case InvalidName
+        case IDAlreadyExists(id: UUID)
+        case NameAlreadyExists(name: String)
+        case SiteDoesNotExist(name: String)
+    }
+    
+    override func validateForInsert() throws {
+        try super.validateForInsert()
+        try validateConsistency()
+    }
+    
+    override func validateForUpdate() throws {
+        try super.validateForUpdate()
+        try validateConsistency()
+    }
+    
+    func validateConsistency() throws {
+        
+    }
+
     public static let DEFAULT_NAME = "Default"
     
     public enum EntityError: Error {
         case InvalidName
         case NameAlreadyExists(name: String)
         case SiteDoesNotExist(name: String)
-    }
-    
-    public static var sortByName: NotebookEntitySort {
-        func sort(_ lhs: NotebookEntity, _ rhs: NotebookEntity) throws -> Bool {
-            return lhs.name! < rhs.name!
-        }
-        return sort
-    }
-    
-    public static var sortByCreatedDate: NotebookEntitySort {
-        func sort(_ lhs: NotebookEntity, _ rhs: NotebookEntity) throws -> Bool {
-            return lhs.createdDate! > rhs.createdDate!
-        }
-        return sort
-    }
-    
-    public static var sortByUpdatedDate: NotebookEntitySort {
-        func sort(_ lhs: NotebookEntity, _ rhs: NotebookEntity) throws -> Bool {
-            return lhs.updatedDate! > rhs.updatedDate!
-        }
-        return sort
     }
     
     public static func new(_ context: NSManagedObjectContext,
@@ -79,18 +81,18 @@ public extension NotebookEntity {
     
     public static func find(_ context: NSManagedObjectContext,
                             by name: String) throws -> NotebookEntity? {
-        guard let fetchRequest: NSFetchRequest<NotebookEntity> = context.fetchRequestTemplate(
-            for: "FetchNotebookByName", with: ["NAME": name]) else {
-                return nil
+        guard let request = fetchRequest(context, with: "FetchNotebookByName", with: ["NAME": name]) else {
+            return nil
         }
-        let fetchResult = try context.fetch(fetchRequest)
-        return fetchResult.count == 0 ? nil : fetchResult[0]
+        let result = try context.fetch(request)
+        return result.count == 0 ? nil : result[0]
     }
     
-    public static func all(_ context: NSManagedObjectContext,
-                           sorted by: NotebookEntitySort = sortByName) throws -> [NotebookEntity] {
+    public static func all(_ context: NSManagedObjectContext) throws -> [NotebookEntity] {
         let request: NSFetchRequest<NotebookEntity> = NotebookEntity.fetchRequest()
-        return try context.fetch(request).sorted(by: by)
+        request.includesSubentities = false
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        return try context.fetch(request)
     }
     
     public func delete(_ context: NSManagedObjectContext) {
@@ -137,5 +139,15 @@ public extension NotebookEntity {
             $0 as! SiteEntity
             }.sorted(by: by)
     }
+    
+    private static func fetchRequest(_ context: NSManagedObjectContext,
+                                     with name: String,
+                                     with vars: [String: Any]) -> NSFetchRequest<NotebookEntity>? {
+        guard let fetchRequest: NSFetchRequest<NotebookEntity> = context.fetchRequestTemplate(with: name, with: vars) else {
+            return nil
+        }
+        return fetchRequest
+    }
+ */
     
 }

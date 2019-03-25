@@ -25,66 +25,92 @@ class NotebookEntityTests: XCTestCase {
     }
     
     func test1() throws {
-        guard let cdm1 = CoreDataManager.init("EcoDatumV1", ofType: NSInMemoryStoreType) else {
+        guard let cdm = CoreDataManager.init("EcoDatumV1", ofType: NSInMemoryStoreType) else {
             XCTFail()
             return
         }
-        let context = cdm1.container.newBackgroundContext()
+        let context = cdm.newDerivedContext()
         
-        let defaultNotebook = try NotebookEntity.new(context)
-        XCTAssert(defaultNotebook.name == NotebookEntity.DEFAULT_NAME)
-        XCTAssert(try defaultNotebook.sites().isEmpty)
+        let id = UUID()
+        let createdDate = Date()
         
-        try context.save()
-        
-        do {
-            let _ = try NotebookEntity.new(context)
-            XCTFail()
-        } catch {
-            // Expected, do nothing.
+        expectation(
+            forNotification: .NSManagedObjectContextDidSave,
+            object: context) { notification in
+                return true
         }
         
-        XCTAssert(try NotebookEntity.all(context).count == 1)
+        let defaultNotebook = NotebookEntity(context: context)
+        defaultNotebook.id = id
+        defaultNotebook.createdDate = createdDate
+        defaultNotebook.updatedDate = createdDate
+        cdm.saveContext(context)
         
-        let notebook = try NotebookEntity.find(context, by: "deFault")
-        XCTAssert(notebook?.id == defaultNotebook.id)
+        waitForExpectations(timeout: 2.0) { error in
+            XCTAssertNil(error, "Save did not occur")
+        }
         
-        defaultNotebook.delete(context)
-        XCTAssert(try NotebookEntity.all(context).count == 0)
-        XCTAssert(try NotebookEntity.find(context, by: NotebookEntity.DEFAULT_NAME) == nil)
+        expectation(
+            forNotification: .NSManagedObjectContextDidSave,
+            object: context) { notification in
+                let fetchRequest: NSFetchRequest<NotebookEntity> = NotebookEntity.fetchRequest()
+                var notebooks: [NotebookEntity]
+                do {
+                    notebooks = try context.fetch(fetchRequest)
+                } catch let error as NSError {
+                    XCTFail(error.localizedDescription)
+                    return false
+                }
+                guard notebooks.count == 1, let updatedDate = notebooks[0].updatedDate else {
+                    XCTFail("Unexpected number of notebooks")
+                    return false
+                }
+                XCTAssert(updatedDate > createdDate)
+                return true
+        }
+        
+        let fetchRequest: NSFetchRequest<NotebookEntity> = NotebookEntity.fetchRequest()
+        let notebooks = try context.fetch(fetchRequest)
+        XCTAssert(notebooks.count == 1)
+        let notebook = notebooks.first!
+        XCTAssert(notebook.id == defaultNotebook.id)
+        
+        notebook.name = "new"
+        cdm.saveContext(context)
+        
+        waitForExpectations(timeout: 5.0) { error in
+            XCTAssertNil(error, "Save did not occur")
+        }
     }
     
     func test2() throws {
-        guard let cdm1 = CoreDataManager.init("EcoDatumV1", ofType: NSInMemoryStoreType) else {
+        guard let cdm = CoreDataManager.init("EcoDatumV1", ofType: NSInMemoryStoreType) else {
             XCTFail()
             return
         }
-        let context = cdm1.container.newBackgroundContext()
+        let context = cdm.newDerivedContext()
         
-        let _ = try NotebookEntity.new(context)
-        let notebook1 = try NotebookEntity.new(context, name: "notebook1")
-        let _ = try NotebookEntity.new(context, name: "notebook2")
-        let _ = try NotebookEntity.new(context, name: "notebook3")
+        let defaultNotebook = NotebookEntity(context: context)
+        defaultNotebook.id = UUID()
+        defaultNotebook.createdDate = Date()
+        defaultNotebook.updatedDate = Date()
         
-        try context.save()
-        
-        do {
-            let _ = try NotebookEntity.new(context, name: "notebook1")
-            XCTFail()
-        } catch {
-            // Expected, do nothing.
+        expectation(
+            forNotification: .NSManagedObjectContextDidSave,
+            object: context) { notification in
+                return true
         }
         
-        XCTAssert(try NotebookEntity.all(context).count == 4)
+        cdm.saveContext(context)
         
-        notebook1.delete(context)
-        XCTAssert(try NotebookEntity.all(context).count == 3)
-        XCTAssert(try NotebookEntity.find(context, by: "notebook1") == nil)
+        waitForExpectations(timeout: 100) { error in
+            XCTAssertNil(error, "Save did not occur")
+        }
         
-        let notebooks = try NotebookEntity.all(context)
-        XCTAssert(notebooks[0].name == NotebookEntity.DEFAULT_NAME)
-        XCTAssert(notebooks[1].name == "notebook2")
-        XCTAssert(notebooks[2].name == "notebook3")
+        let fetchRequest: NSFetchRequest<NotebookEntity> = NotebookEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name ==[c] %@", "Default")
+        let count = try context.count(for: fetchRequest)
+        XCTAssert(count == 1)
     }
     
 }
