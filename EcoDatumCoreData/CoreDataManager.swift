@@ -16,11 +16,11 @@ private let log = SwiftyBeaver.self
 
 public class CoreDataManager {
     
-    let modelName: String
+    public let modelName: String
     
-    let container: NSPersistentContainer
+    public let container: NSPersistentContainer
     
-    let mainContext: NSManagedObjectContext
+    public let mainContext: NSManagedObjectContext
     
     public init?(_ modelName: String,
                  ofType storeType: String = NSSQLiteStoreType,
