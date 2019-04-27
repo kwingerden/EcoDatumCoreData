@@ -14,7 +14,6 @@ public typealias SiteEntitySort = (SiteEntity, SiteEntity) throws -> Bool
 
 public extension SiteEntity {
     
-    /*
     public enum EntityError: Error {
         case InvalidName
         case InvalidLocation(location: CLLocation)
@@ -90,11 +89,9 @@ public extension SiteEntity {
     
     public static func find(by name: String,
                             in notebook: NotebookEntity) throws -> SiteEntity? {
-    
         return try notebook.sites().first {
-            $0.name?.lowercased() == name
+            $0.name?.lowercased() == name.lowercased()
         }
-  return nil
     }
     
     public func delete(_ context: NSManagedObjectContext) {
@@ -150,6 +147,5 @@ public extension SiteEntity {
             $0 as! EcoDatumEntity
             }.sorted(by: by)
     }
- */
     
 }

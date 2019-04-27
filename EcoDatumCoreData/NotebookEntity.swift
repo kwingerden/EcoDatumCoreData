@@ -11,13 +11,10 @@ import CoreLocation
 import Foundation
 import SwiftyBeaver
 
-// public typealias NotebookEntitySort = (NotebookEntity, NotebookEntity) throws -> Bool
-
-// private let log = SwiftyBeaver.self
+public typealias NotebookEntitySort = (NotebookEntity, NotebookEntity) throws -> Bool
 
 public extension NotebookEntity {
     
-    /*
     public enum EntityError: Error {
         case InvalidEntity(message: String)
         case InvalidName
@@ -41,12 +38,6 @@ public extension NotebookEntity {
     }
 
     public static let DEFAULT_NAME = "Default"
-    
-    public enum EntityError: Error {
-        case InvalidName
-        case NameAlreadyExists(name: String)
-        case SiteDoesNotExist(name: String)
-    }
     
     public static func new(_ context: NSManagedObjectContext,
                            id: UUID? = nil,
@@ -81,9 +72,7 @@ public extension NotebookEntity {
     
     public static func find(_ context: NSManagedObjectContext,
                             by name: String) throws -> NotebookEntity? {
-        guard let request = fetchRequest(context, with: "FetchNotebookByName", with: ["NAME": name]) else {
-            return nil
-        }
+        let request: NSFetchRequest<NotebookEntity> = NotebookEntity.fetchRequest()
         let result = try context.fetch(request)
         return result.count == 0 ? nil : result[0]
     }
@@ -140,6 +129,7 @@ public extension NotebookEntity {
             }.sorted(by: by)
     }
     
+    /*
     private static func fetchRequest(_ context: NSManagedObjectContext,
                                      with name: String,
                                      with vars: [String: Any]) -> NSFetchRequest<NotebookEntity>? {

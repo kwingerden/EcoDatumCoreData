@@ -26,7 +26,6 @@ class CoreDataManagerTests: XCTestCase {
     }
     
     func test1() throws {
-        /*
         guard let cdm1 = CoreDataManager.init("EcoDatumV1", ofType: NSInMemoryStoreType) else {
             XCTFail()
             return
@@ -47,7 +46,6 @@ class CoreDataManagerTests: XCTestCase {
         
         print(defaultNotebook1.id!)
         print(defaultNotebook2.id!)
- */
     }
     
 }

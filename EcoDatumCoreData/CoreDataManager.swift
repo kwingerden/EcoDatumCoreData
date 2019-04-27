@@ -12,7 +12,7 @@ import CoreLocation
 import EcoDatumCommon
 import SwiftyBeaver
 
-private let log = SwiftyBeaver.self
+let log = SwiftyBeaver.self
 
 public class CoreDataManager {
     
