@@ -129,15 +129,13 @@ public extension NotebookEntity {
             }.sorted(by: by)
     }
     
-    /*
-    private static func fetchRequest(_ context: NSManagedObjectContext,
-                                     with name: String,
-                                     with vars: [String: Any]) -> NSFetchRequest<NotebookEntity>? {
-        guard let fetchRequest: NSFetchRequest<NotebookEntity> = context.fetchRequestTemplate(with: name, with: vars) else {
-            return nil
+    public static func sites(_ context: NSManagedObjectContext,
+                             in notebookName: String,
+                             sorted by: SiteEntitySort = SiteEntity.sortByName) throws -> [SiteEntity] {
+        guard let notebook = try NotebookEntity.find(context, by: notebookName) else {
+            return []
         }
-        return fetchRequest
+        return try notebook.sites(sorted: by)
     }
- */
     
 }
