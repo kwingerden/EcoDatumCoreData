@@ -53,7 +53,7 @@ public extension EcoDatumEntity {
         if dataType.isEmpty {
             throw EntityError.InvalidDataType(dataType: dataType)
         }
-        if let dataUnit = dataUnit, !dataUnit.isEmpty {
+        if let dataUnit = dataUnit, dataUnit.isEmpty {
             throw EntityError.InvalidDataUnit(dataUnit: dataUnit)
         }
         
